@@ -22,8 +22,9 @@ class MixPugTask extends Task {
         this.dest = dest;
 
         // Setup template seeder
-        this.seedPath = options.seeds;
+        this.seedPath = options.seeds || {};
         this.locals = options.locals || {};
+        this.settings = options.settings || {};
 
         this.seeder = this.createSeeder();
 
@@ -69,7 +70,7 @@ class MixPugTask extends Task {
 
         try {
         
-            let template = pug.compileFile(file.path());
+            let template = pug.compileFile(file.path(), this.settings);
 
             let html = template(
                 this.seeder.locals
